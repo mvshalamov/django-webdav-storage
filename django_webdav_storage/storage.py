@@ -77,6 +77,8 @@ class WebDavStorage(StorageBase):
         return ContentFile(self.webdav('GET', name).content)
 
     def _save(self, name, content):
+        content.file.size = len(b''.join(content.readlines()))
+        content.seek(0)
         path_list = name.split('/')
         coll_path = self.webdav_url
 
